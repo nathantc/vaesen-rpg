@@ -17,6 +17,7 @@
         "react"
     ],
     "rules": {
+        "object-curly-spacing": "off",
         "react/react-in-jsx-scope": "off",
         "space-before-function-paren": "off",
         "semi": "off"
