@@ -1,19 +1,28 @@
 import './App.css';
 import {useEffect, useState} from 'react';
+import PropTypes from 'prop-types';
 
-// const apiHost = window.location.hostname === 'localhost' ? 'http://localhost:7071' : '';
-const apiHost = '';
+export class User {
+  constructor(userId, username) {
+    this.userId = userId;
+    this.username = username;
+  }
+}
 
-function App() {
+function App(props) {
   return (
     <div className="App">
       <header className="App-header">
         Welcome to Vaesen RPG
       </header>
+      <UserInfo user={props.user}></UserInfo>
       <ApiMessage></ApiMessage>
-      <UserInfo></UserInfo>
     </div>
   );
+}
+
+App.propTypes = {
+  user: PropTypes.instanceOf(User)
 }
 
 function ApiMessage() {
@@ -24,7 +33,7 @@ function ApiMessage() {
     (async () => {
       if (!isLoading) return;
       try {
-        const data = await fetch(`${apiHost}/api/message`);
+        const data = await fetch('/api/message');
         const json = await data.json();
         setData(json.message);
         setIsLoading(false);
@@ -37,23 +46,17 @@ function ApiMessage() {
   return <div>Message: {data}</div>
 }
 
-function UserInfo() {
-  const [user, setUser] = useState(null);
+function UserInfo(props) {
+  return (
+    <div>
+      <div>User: {props.user.username}</div>
+      <div>User: {props.user.userId}</div>
+    </div>
+  )
+}
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await fetch(`${apiHost}/.auth/me`)
-        const json = await response.json();
-        console.log(json);
-        setUser(json.clientPrincipal.userDetails);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, []);
-
-  return <div>User: {user}</div>
+UserInfo.propTypes = {
+  user: PropTypes.instanceOf(User)
 }
 
 export default App;
