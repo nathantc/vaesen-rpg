@@ -6,6 +6,12 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `swa start`
+
+Runs the Azure Static Web Apps emulator backed by API and Authentication emulation.
+This script uses the React Scripts start and reload the app when making changes. Changes
+made in the API will require restarting the SWA. 
+
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -13,6 +19,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+### `swa start http://localhost:3000 --api-location ./api`
+
+Runs the Azure State Web Apps locally. Connecting the static content to
+the Reac development server on port 3000 and starting the API service. 
 
 ### `npm test`
 
