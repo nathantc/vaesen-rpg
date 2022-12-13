@@ -1,5 +1,6 @@
 import './App.css';
 import {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 
 const apiPath = '';// window.location.hostname === 'localhost' ? 'http://localhost:7071/' : '';
 
@@ -12,14 +13,23 @@ export class User {
 
 function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        Welcome to Vaesen RPG
-      </header>
-      <ApiMessage></ApiMessage>
-      <UserInfo></UserInfo>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          Welcome to Vaesen RPG
+        </header>
+        <ApiMessage></ApiMessage>
+        <UserInfo></UserInfo>
+        <Routes>
+          <Route exact path='/' element={<Home/>}></Route>
+        </Routes>
+      </div>
+    </Router>
   );
+}
+
+function Home() {
+  return <div>Welcome to Vaesen...</div>
 }
 
 export function ApiMessage() {
