@@ -1,10 +1,18 @@
-# Setting local dev environment
+# Setup local dev environment
 
 1. Install Azure CLI
 2. Install Azure Static Web App CLI: [https://github.com/Azure/static-web-apps-cli](https://github.com/Azure/static-web-apps-cli)
 3. Add `local.settings.json` file to `/api` folder
 
 ## Running with Azure EMulators
+
+### Successful approach so far:
+
+1. Start react using `npm start` as normal. It will launch to localhost:3000.
+2. Start the API emulator `swa start --api-location api`. It will start on `localhost:7071`.
+3. Start the main emulator giving it URLs for both the dev and api servers. **IMPORTANT:** When starting the main emulator, use `127.0.0.1` rather than localhost (explanation in the Learnings section). ```swa start http://127.0.0.1:3000 --api-location http://127.0.0.1:7071```. The emulator will start on `localhost:4280`. Launching the app from that url will allow the emulator to proxy the auth and api for local development.
+
+### Learnings
 
 Local development for Azure Static Web Apps is explained [here](https://learn.microsoft.com/en-us/azure/static-web-apps/local-development).
 
@@ -15,15 +23,8 @@ start both the React server instance and the API. It will proxy requests to the 
 
 After continued experimenting, having the SWA emulator start and bind to both the React web server and API server has been frustrating at best. What I've learned so far:
 
-1. SWA uses `wait-on` under the hood to look for the server instances. This package seems to fail when waiting on `locahost` but success on `127.0.0.1`. Some comments have indicated this is a IPV4 vs IPV6 issues. However, `wait-on` is the only tool that seems to have issue. A `curl` command succeeds. 
-2. The main emulator starts on port `4280`. This is not at all obivious unless you run `swa start` and give to a dev server and api sever url that doesn't use `localhost` as it will never find them. 
-
-### Successful approach so far:
-
-1. Start react using `npm start` as normal. It will launch to localhost:3000 but this is okay.
-2. Start the API emulator `swa start --api-location api`. It will start on `localhost:7071`.
-3. Start the main emulator giving it URLs for both the dev and api servers. *IMPORTANT*: It must use `127.0.0.1` rather than localhost. `swa start http://127.0.0.1:3000 --api-location http://127.0.0.1:7071`. The emulator will start on `localhost:4280`. Launching the app from that url will allow the emulator to proxy the auth and api for local development.
-
+1. SWA uses `wait-on` under the hood to look for the server instances. This package seems to fail when waiting on `locahost` but succeeds on `127.0.0.1`. Some comments have indicated this is a IPV4 vs IPV6 issues. However, `wait-on` is the only tool that seems to have issue where a `curl` command succeeds. 
+2. The main emulator starts on port `4280`. This is not obivious unless you run `swa start` and attach to a running dev and api instance. 
 
 ## Common problems during setup
 
@@ -34,14 +35,14 @@ The local setting file should **_NOT_** be committed into source control. It wil
 **The error reported:** 
 
 ```sh: 1: react-scripts: not found
-[run] cd "/home/nathan/dev/spikes/vaesen-rpg" && npm start exited with code 127
+[run] cd "/home/user/app/my-app" && npm start exited with code 127
 --> Sending SIGTERM to other processes..
 [swa] node "/usr/local/lib/node_modules/@azure/static-web-apps-cli/dist/msha/server.js" exited with code SIGTERM
 --> Sending SIGTERM to other processes..
 [api] Can't determine project language from files. Please use one of [--csharp, --javascript, --typescript, --java, --python, --powershell, --custom]
 [api] Can't determine project language from files. Please use one of [--csharp, --javascript, --typescript, --java, --python, --powershell, --custom]
 [api] Can't determine project language from files. Please use one of [--csharp, --javascript, --typescript, --java, --python, --powershell, --custom]
-[api] cd "/home/nathan/dev/spikes/vaesen-rpg/api" && /home/nathan/.swa/core-tools/v4/func start --cors "*" --port 7071  exited with code SIGTERM
+[api] cd "/home/user/app/my-app/api" && /home/nathan/.swa/core-tools/v4/func start --cors "*" --port 7071  exited with code SIGTERM
 ```
 
 **Simple local settings file:**
@@ -56,7 +57,7 @@ The local setting file should **_NOT_** be committed into source control. It wil
 }
 ```
 
-# Available Scripts
+# React Scripts
 
 In the project directory, you can run:
 
@@ -73,11 +74,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `swa start http://localhost:3000 --api-location ./api`
-
-Runs the Azure State Web Apps locally. Connecting the static content to
-the Reac development server on port 3000 and starting the API service. 
 
 ### `npm test`
 
