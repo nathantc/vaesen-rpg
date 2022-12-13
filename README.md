@@ -6,10 +6,23 @@
 
 ## Running with Azure EMulators
 
+Local development for Azure Static Web Apps is explained [here](https://learn.microsoft.com/en-us/azure/static-web-apps/local-development).
+
 The Static Web App CLI provides a script to run the Azure Static Web Emulators outside of VSCode. To run localling, 
 first start React with `npm start` and then connect the emulator API by running `swa start http://localhost:3000 --api-location api`.
 This has been the most reliable way to start the local instance. Another option is to configure SWA to
 start both the React server instance and the API. It will proxy requests to the React instance port to the API port.
+
+After continued experimenting, having the SWA emulator start and bind to both the React web server and API server has been frustrating at best. What I've learned so far:
+
+1. SWA uses `wait-on` under the hood to look for the server instances. This package seems to fail when waiting on `locahost` but success on `127.0.0.1`. Some comments have indicated this is a IPV4 vs IPV6 issues. However, `wait-on` is the only tool that seems to have issue. A `curl` command succeeds. 
+2. The main emulator starts on port `4280`. This is not at all obivious unless you run `swa start` and give to a dev server and api sever url that doesn't use `localhost` as it will never find them. 
+
+### Successful approach so far:
+
+1. Start react using `npm start` as normal. It will launch to localhost:3000 but this is okay.
+2. Start the API emulator `swa start --api-location api`. It will start on `localhost:7071`.
+3. Start the main emulator giving it URLs for both the dev and api servers. *IMPORTANT*: It must use `127.0.0.1` rather than localhost. `swa start http://127.0.0.1:3000 --api-location http://127.0.0.1:7071`. The emulator will start on `localhost:4280`. Launching the app from that url will allow the emulator to proxy the auth and api for local development.
 
 
 ## Available Scripts

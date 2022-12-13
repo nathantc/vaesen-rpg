@@ -4,11 +4,7 @@
     "vaesen-rpg": {
       "appLocation": ".",
       "apiLocation": "api",
-      "outputLocation": "build",
-      "appBuildCommand": "npm run build",
-      "apiBuildCommand": "npm run build --if-present",
-      "run": "npm start",
-      "appDevserverUrl": "http://localhost:3000"
+      "outputLocation": "build"
     }
   }
 }
