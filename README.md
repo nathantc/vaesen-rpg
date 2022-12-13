@@ -25,7 +25,38 @@ After continued experimenting, having the SWA emulator start and bind to both th
 3. Start the main emulator giving it URLs for both the dev and api servers. *IMPORTANT*: It must use `127.0.0.1` rather than localhost. `swa start http://127.0.0.1:3000 --api-location http://127.0.0.1:7071`. The emulator will start on `localhost:4280`. Launching the app from that url will allow the emulator to proxy the auth and api for local development.
 
 
-## Available Scripts
+## Common problems during setup
+
+### Missing `local.settings.json` in API folder
+
+The local setting file should **_NOT_** be committed into source control. It will need to be created when setting up local environment. 
+
+**The error reported:** 
+
+```sh: 1: react-scripts: not found
+[run] cd "/home/nathan/dev/spikes/vaesen-rpg" && npm start exited with code 127
+--> Sending SIGTERM to other processes..
+[swa] node "/usr/local/lib/node_modules/@azure/static-web-apps-cli/dist/msha/server.js" exited with code SIGTERM
+--> Sending SIGTERM to other processes..
+[api] Can't determine project language from files. Please use one of [--csharp, --javascript, --typescript, --java, --python, --powershell, --custom]
+[api] Can't determine project language from files. Please use one of [--csharp, --javascript, --typescript, --java, --python, --powershell, --custom]
+[api] Can't determine project language from files. Please use one of [--csharp, --javascript, --typescript, --java, --python, --powershell, --custom]
+[api] cd "/home/nathan/dev/spikes/vaesen-rpg/api" && /home/nathan/.swa/core-tools/v4/func start --cors "*" --port 7071  exited with code SIGTERM
+```
+
+**Simple local settings file:**
+
+```
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node"
+  }
+}
+```
+
+# Available Scripts
 
 In the project directory, you can run:
 
