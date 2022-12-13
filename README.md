@@ -1,6 +1,16 @@
-# Getting Started with Create React App
+# Setting local dev environment
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. Install Azure CLI
+2. Install Azure Static Web App CLI: [https://github.com/Azure/static-web-apps-cli](https://github.com/Azure/static-web-apps-cli)
+3. Add `local.settings.json` file to `/api` folder
+
+## Running with Azure EMulators
+
+The Static Web App CLI provides a script to run the Azure Static Web Emulators outside of VSCode. To run localling, 
+first start React with `npm start` and then connect the emulator API by running `swa start http://localhost:3000 --api-location api`.
+This has been the most reliable way to start the local instance. Another option is to configure SWA to
+start both the React server instance and the API. It will proxy requests to the React instance port to the API port.
+
 
 ## Available Scripts
 

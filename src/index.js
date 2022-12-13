@@ -6,11 +6,11 @@ import App, {User} from './App';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AppContainer />
+    <App />
   </React.StrictMode>
 );
 
-function AppContainer() {
+export function AppContainer() {
   const [isLoading, setLoading] = useState(true);
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [user, setUser] = useState(null);
