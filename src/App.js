@@ -3,8 +3,6 @@ import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import {PropTypes} from 'prop-types';
 import './App.css';
 
-const apiPath = '';// window.location.hostname === 'localhost' ? 'http://localhost:7071/' : '';
-
 export class User {
   constructor(userId, username) {
     this.userId = userId;
@@ -40,9 +38,7 @@ function App(props) {
   }
 
   if (!user) {
-    // window.location = '/.auth/login/github';
     window.history.pushState({}, undefined, '/login');
-    // return <div></div>
   }
 
   return (
@@ -52,9 +48,9 @@ function App(props) {
           Welcome to Vaesen RPG
         </header>
         <Routes>
-          <Route exact path='/' element={<Home user={user}/>} />
-          <Route exact path='login' element={<Login/>} />
-          <Route exact path='*' element={<div>No Path</div>} />
+          <Route exact path='/' element={<Home user={user}/>}/>
+          <Route exact path='login' element={<Login/>}/>
+          <Route exact path='*' element={<div>No Path</div>}/>
         </Routes>
       </div>
     </Router>
@@ -65,7 +61,9 @@ function Login() {
   return (
     <div>
       Choose login method:
-      <a onClick={() => { window.location = '/.auth/login/github' }}>Github</a>
+      <a onClick={() => {
+        window.location = '/.auth/login/github'
+      }}>Github</a>
     </div>
   )
 }
@@ -97,7 +95,7 @@ export function ApiMessage() {
     (async () => {
       if (!isLoading) return;
       try {
-        const data = await fetch(`${apiPath}api/message`);
+        const data = await fetch('api/message');
         const json = await data.json();
         setData(json.text);
         setIsLoading(false);
@@ -111,10 +109,27 @@ export function ApiMessage() {
 }
 
 export function UserInfo({user}) {
+  const [user2, setUser] = useState(null);
+  console.log(user);
+
+  useEffect(() => {
+    if (user2) return;
+    (async () => {
+      const response = await fetch('api/user');
+      const data = await response.json();
+
+      setUser(data);
+    })()
+  })
+
+  if (user2 == null) {
+    return <div>Loading...</div>
+  }
+
   return (
     <div>
-      <div>User ID: {user.userId}</div>
-      <div>Username: {user.username}</div>
+      <div>User ID: {user2.userId}</div>
+      <div>Username: {user2.username}</div>
     </div>
   )
 }
