@@ -8,5 +8,8 @@
   },
   "dependencies": {
     "mongoose": "^6.8.0"
+  },
+  "devDependencies": {
+    "stub-azure-function-context": "^2.0.0-alpha.7"
   }
 }
