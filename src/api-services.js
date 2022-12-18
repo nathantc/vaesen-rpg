@@ -1,10 +1,4 @@
-import {PropTypes} from 'prop-types';
-
-export class UserProfile {
-  constructor(name) {
-    this.name = name;
-  }
-}
+import {Profile} from './api-data';
 
 export function userAuthenticated() {
   return new Promise((resolve) => {
@@ -32,23 +26,11 @@ export function fetchUserProfile() {
         if (data.profile == null) {
           reject(new Error('User is not authenticated'))
         } else {
-          resolve(new UserProfile(data.profile.name));
+          resolve(new Profile(data.profile.name));
         }
       } catch (e) {
         reject(new Error('Unable to retrieve user profile.'));
       }
     })();
   })
-}
-
-export function UserName({userProfile}) {
-  if (userProfile == null) {
-    return <div></div>;
-  }
-  console.log('userProfile', userProfile);
-  return <div>Username: {userProfile.name}</div>
-}
-
-UserName.propTypes = {
-  userProfile: PropTypes.instanceOf(UserProfile)
 }

@@ -47,6 +47,7 @@ table {
 
 
 :root {
+  --font-color: black;
   --background-page-color: #F7F6F4;
   --background-offset-color: #E5DDD6;
   --background-header-color: #B09D8D;
@@ -63,10 +64,31 @@ body {
   sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: whitesmoke;
+  background-color: var(--background-page-color);
+  color: var(--font-color);
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   monospace;
+}
+
+div {
+  padding: 3px;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+a:active {
+  text-decoration: underline;
 }

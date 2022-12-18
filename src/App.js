@@ -1,7 +1,10 @@
-import {useEffect, useState} from 'react';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import './App.css';
-import {fetchUserProfile, UserName} from './UserProfile';
+import {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
+import {PropTypes} from 'prop-types';
+import {Profile} from './api-data';
+import {fetchUserProfile} from './api-services';
+import {UserProfileView, UserName} from './UserProfileView';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -30,18 +33,43 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          Welcome to Vaesen RPG
-          <UserName userProfile={user}></UserName>
-        </header>
+        <Header profile={user}></Header>
+        <NavBar></NavBar>
         <Routes>
           <Route exact path='/' element={<Home user={user}/>}/>
+          <Route exact path='home' element={<Home user={user}/>}/>
           <Route exact path='login' element={<Login/>}/>
+          <Route exact path='profile' element={<UserProfileView profile={user}/>}/>
           <Route exact path='*' element={<div>No Path</div>}/>
         </Routes>
       </div>
     </Router>
   );
+}
+
+function Header({profile}) {
+  return (
+    <header className="App-header">
+      <div>Welcome to Vaesen RPG</div>
+      <Link to="profile">
+        <UserName profile={profile}/>
+      </Link>
+    </header>
+  )
+}
+Header.propTypes = {
+  profile: PropTypes.instanceOf(Profile)
+}
+
+function NavBar() {
+  return (
+    <div className="App-navigation">
+      <div><Link to="/">Home</Link></div>
+      <div><Link to="characters">Characters</Link></div>
+      <div><Link to="build">Character Builder</Link></div>
+      <div>Welcome <Link to="profile">Profile</Link></div>
+    </div>
+  )
 }
 
 function Login() {

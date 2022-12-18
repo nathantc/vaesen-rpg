@@ -1,13 +1,26 @@
 .App-header {
-  background-color: #282c34;
+  background-color: var(--background-header-color);
   min-height: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
   padding: 10px;
+}
+
+.App-navigation {
+  background-color: var(--background-offset-color);
+}
+
+.App-navigation > div {
+  /*width: 100px;*/
+  display: inline-block;
+  border-left: 1px solid black;
+  padding-right: 5px;
+}
+.App-navigation > div:first-child {
+  border-left: 0px;
 }
 
 .section {
