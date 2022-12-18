@@ -10,7 +10,9 @@ mongoose.connect(
 
 const profileSchema = new mongoose.Schema({
   _id: String,
-  name: String
+  name: String,
+  identityDetails: String,
+  identityProvider: String
 });
 
 const ProfileModel = mongoose.model('profile', profileSchema);
@@ -46,14 +48,21 @@ module.exports = async function (context, req) {
 
 async function getProfile(principal, context) {
   let profile = await ProfileModel.findById(principal.userId);
-  console.log(profile);
   if (profile == null) {
-    profile = await ProfileModel.create({_id: principal.userId, name: principal.userDetails});
+    profile = await ProfileModel.create({
+      _id: principal.userId,
+      name: principal.userDetails,
+      identityDetails: principal.userDetails,
+      identityProvider: principal.identityProvider
+    });
   }
 
-  context.res.body = {profile: profile}
+  context.res.body = {
+    profile: {
+      name: profile.name
+    }
+  };
 }
-
 
 async function updateTask(principal, context) {
   const profile = context.req.body;
