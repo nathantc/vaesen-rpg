@@ -8,15 +8,21 @@ mongoose.connect(
   }
 );
 
-const taskSchema = new mongoose.Schema({
-  title: String,
-  completed: {
-    type: Boolean,
-    default: false
-  }
+const profileSchema = new mongoose.Schema({
+  _id: String,
+  name: String
 });
 
-const TaskModel = mongoose.model('task', taskSchema);
+const ProfileModel = mongoose.model('profile', profileSchema);
+
+function getPrincipal(req) {
+  const header = req.headers['x-ms-client-principal'];
+  const encoded = Buffer.from(header, 'base64');
+  const decoded = encoded.toString('ascii');
+  const principal = JSON.parse(decoded);
+
+  return principal;
+}
 
 module.exports = async function (context, req) {
   context.res = {
@@ -25,35 +31,33 @@ module.exports = async function (context, req) {
     }
   }
 
+  const principal = getPrincipal(req);
   switch (req.method) {
     case 'GET':
-      await getTasks(context);
-      break;
-    case 'POST':
-      await createTask(context);
+      await getProfile(principal, context);
       break;
     case 'PUT':
-      await updateTask(context);
+      await updateTask(principal, context);
       break;
+    default:
+      context.res.status = 405;
   }
 };
 
-async function getTasks(context) {
-  const tasks = await TaskModel.find();
-  context.res.body = { tasks: tasks };
+async function getProfile(principal, context) {
+  let profile = await ProfileModel.findById(principal.userId);
+  console.log(profile);
+  if (profile == null) {
+    profile = await ProfileModel.create({_id: principal.userId, name: principal.userDetails});
+  }
+
+  context.res.body = {profile: profile}
 }
 
-async function createTask(context) {
-  const body = context.req.body;
-  const task = await TaskModel.create(body);
-  context.res.status = 201;
-  context.res.body = task;
-}
 
-async function updateTask(context) {
-  const id = context.bindingData.id;
-  const task = context.req.body;
-  const result = await TaskModel.updateOne({ _id: id }, task);
+async function updateTask(principal, context) {
+  const profile = context.req.body;
+  const result = await ProfileModel.updateOne({_id: principal.userId}, profile);
   if (result.nModified === 1) {
     context.res.status = 204;
   } else {

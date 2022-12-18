@@ -23,7 +23,7 @@ function App() {
     return <div>Loading....</div>
   }
 
-  if (!user) {
+  if (user == null) {
     window.history.pushState({}, undefined, '/login');
   }
 
