@@ -1,4 +1,5 @@
 import {Profile} from './api-data';
+import {useEffect, useState} from 'react';
 
 export function userAuthenticated() {
   return new Promise((resolve) => {
@@ -51,4 +52,25 @@ export function submitProfileChanges(profile) {
       }
     })();
   });
+}
+
+export function ApiMessage() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [data, setData] = useState('');
+
+  useEffect(() => {
+    (async () => {
+      if (!isLoading) return;
+      try {
+        const data = await fetch('api/message');
+        const json = await data.json();
+        setData(json.text);
+        setIsLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }, []);
+
+  return <div>Message: {data}</div>
 }

@@ -67,7 +67,6 @@ async function getProfile(principal, context) {
 async function updateProfile(principal, context) {
   const profile = context.req.body;
   const result = await ProfileModel.updateOne({_id: principal.userId}, profile);
-  console.log(result);
   if (result.matchedCount === 1) {
     context.res.status = 204;
   } else {

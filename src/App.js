@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
 import {PropTypes} from 'prop-types';
 import {Profile} from './api-data';
-import {fetchUserProfile} from './api-services';
+import {fetchUserProfile, ApiMessage} from './api-services';
 import {UserProfileView, UserName} from './UserProfileView';
 
 function App() {
@@ -13,14 +13,20 @@ function App() {
   useEffect(() => {
     (async () => {
       if (!isLoading) return;
+      await onProfileUpdate();
+      setIsLoading(false);
+    })();
+  }, []);
+
+  const onProfileUpdate = () => {
+    (async () => {
       try {
         setUser(await fetchUserProfile());
       } catch (e) {
         console.log(e);
       }
-      setIsLoading(false);
     })();
-  }, []);
+  }
 
   if (isLoading) {
     return <div>Loading....</div>
@@ -39,7 +45,7 @@ function App() {
           <Route exact path='/' element={<Home user={user}/>}/>
           <Route exact path='home' element={<Home user={user}/>}/>
           <Route exact path='login' element={<Login/>}/>
-          <Route exact path='profile' element={<UserProfileView profile={user}/>}/>
+          <Route exact path='profile' element={<UserProfileView profile={user} onProfileUpdate={onProfileUpdate}/>}/>
           <Route exact path='*' element={<div>No Path</div>}/>
         </Routes>
       </div>
@@ -95,27 +101,6 @@ function Home() {
       <ApiMessage></ApiMessage>
     </>
   )
-}
-
-export function ApiMessage() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [data, setData] = useState('');
-
-  useEffect(() => {
-    (async () => {
-      if (!isLoading) return;
-      try {
-        const data = await fetch('api/message');
-        const json = await data.json();
-        setData(json.text);
-        setIsLoading(false);
-      } catch (e) {
-        console.log(e);
-      }
-    })();
-  }, []);
-
-  return <div>Message: {data}</div>
 }
 
 export default App;

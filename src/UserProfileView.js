@@ -5,7 +5,7 @@ import {submitProfileChanges} from './api-services';
 import {useState} from 'react';
 import {Button} from 'antd';
 
-export function UserProfileView({profile}) {
+export function UserProfileView({profile, onProfileUpdate}) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [data, setData] = useState({
     name: profile.name
@@ -23,6 +23,7 @@ export function UserProfileView({profile}) {
     (async () => {
       try {
         await submitProfileChanges(data);
+        onProfileUpdate();
       } catch (e) {
         console.log(e);
       } finally {
@@ -63,7 +64,8 @@ export function UserProfileView({profile}) {
 }
 
 UserProfileView.propTypes = {
-  profile: PropTypes.instanceOf(Profile)
+  profile: PropTypes.instanceOf(Profile),
+  onProfileUpdate: PropTypes.function
 }
 
 export function UserName({profile}) {
