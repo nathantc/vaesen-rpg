@@ -23,65 +23,21 @@
   border-left: 0px;
 }
 
-.section {
-  border: var(--section-border);
-  background-color: var(--section-background-color);
-  padding: 10px;
-  margin: 5px;
+.App-navigation a {
+  color: var(--font-color);
 }
 
-.builder {
-  display: grid;
-  grid-template-columns: 75% 25%;
+.App-navigation a:link {
+  color: var(--font-color);
+  text-decoration: none;
 }
 
-/* GRID TABLES */
-.table > div {
-  display: grid;
-  gap: 5px;
-  padding: 5px;
-}
-.table > div:nth-child(even) {
-  background-color: whitesmoke;
-}
-.table > div:nth-child(odd) {
-  background-color: var(--background-offset-color);
-}
-.table > div:first-child {
-  background-color: var(--background-header-color);
-  font-weight: bold;
-  font-variant-caps: all-petite-caps;
+.App-navigation a:visited {
+  color: var(--font-color);
+  text-decoration: none;
 }
 
-/* BUILDER */
-.build-summary div {
-  padding: 5px;
-}
-.build-summary label {
-  font-variant-caps: all-petite-caps;
-  margin-right: 10px;
-}
-.build-summary span {
-  font-weight: bold;
-}
-.build-summary .header {
-  background-color: var(--background-header-color);
-  font-weight: bold;
-  font-variant-caps: all-petite-caps;
-}
-
-.table-economic-class > div {
-  grid-template-columns: 5% 23% 33% 34%;
-}
-
-.table-upbringing > div {
-  grid-template-columns: 5% 5% AUTO 15% 15%;
-}
-
-.table-profession > div {
-  grid-template-columns: 10% 15% 20% 20% 15% AUTO;
-}
-
-.table-life-event > div {
-  grid-template-columns: 5% 5% AUTO 15% 15%;
+.App-navigation a:hover {
+  color: var(--font-color);
+  text-decoration: underline;
 }

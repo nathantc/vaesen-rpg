@@ -1,0 +1,27 @@
+.form {
+    border: var(--section-border);
+    background-color: var(--section-background-color);
+    padding: 15px;
+}
+
+.form.page-center {
+    width: 25%;
+    margin: 10vh auto;
+}
+
+.form .row {
+    display: grid;
+}
+
+.row.two {
+    grid-template-columns: 25% auto;
+}
+
+.form .buttons {
+    text-align: left;
+}
+
+.form .buttons > button,
+.form .buttons > a {
+    margin: 10px 10px 0 0;
+}

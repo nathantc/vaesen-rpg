@@ -34,3 +34,21 @@ export function fetchUserProfile() {
     })();
   })
 }
+
+export function submitProfileChanges(profile) {
+  return new Promise((resolve, reject) => {
+    (async () => {
+      try {
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: profile.name })
+        };
+        await fetch('api/user-profile', requestOptions);
+        resolve();
+      } catch {
+        reject(new Error('Unable to update profile data'));
+      }
+    })();
+  });
+}

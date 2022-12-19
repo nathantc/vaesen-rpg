@@ -38,7 +38,7 @@ module.exports = async function (context, req) {
     case 'GET':
       await getProfile(principal, context);
       break;
-    case 'PUT':
+    case 'POST':
       await updateProfile(principal, context);
       break;
     default:
@@ -67,7 +67,8 @@ async function getProfile(principal, context) {
 async function updateProfile(principal, context) {
   const profile = context.req.body;
   const result = await ProfileModel.updateOne({_id: principal.userId}, profile);
-  if (result.nModified === 1) {
+  console.log(result);
+  if (result.matchedCount === 1) {
     context.res.status = 204;
   } else {
     context.res.status = 404;

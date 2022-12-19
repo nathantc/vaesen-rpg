@@ -67,7 +67,7 @@ function NavBar() {
       <div><Link to="/">Home</Link></div>
       <div><Link to="characters">Characters</Link></div>
       <div><Link to="build">Character Builder</Link></div>
-      <div>Welcome <Link to="profile">Profile</Link></div>
+      <div><Link to="profile">Profile</Link></div>
     </div>
   )
 }
