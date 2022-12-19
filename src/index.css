@@ -47,6 +47,8 @@ table {
 
 
 :root {
+  --app-container-width: 1200px;
+  --app-container-margin: 0 auto;
   --font-color: black;
   --background-page-color: #F7F6F4;
   --background-offset-color: #E5DDD6;

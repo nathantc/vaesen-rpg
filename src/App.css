@@ -1,6 +1,25 @@
-.App-header {
+.header-wrapper,
+.nav-wrapper,
+.route-wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.header-wrapper > div,
+.nav-wrapper > div,
+.route-wrapper > div {
+  max-width: var(--app-container-width);
+  margin: var(--app-container-margin);
+}
+
+.header-wrapper {
   background-color: var(--background-header-color);
+}
+
+.header-container {
   min-height: 10vh;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,35 +28,35 @@
   padding: 10px;
 }
 
-.App-navigation {
+.nav-wrapper {
   background-color: var(--background-offset-color);
 }
 
-.App-navigation > div {
-  /*width: 100px;*/
+.nav-content > div {
   display: inline-block;
   border-left: 1px solid black;
   padding-right: 5px;
 }
-.App-navigation > div:first-child {
+.nav-content > div:first-child {
   border-left: 0px;
 }
 
-.App-navigation a {
+.nav-content a {
   color: var(--font-color);
 }
 
-.App-navigation a:link {
-  color: var(--font-color);
-  text-decoration: none;
-}
-
-.App-navigation a:visited {
+.nav-content a:link {
   color: var(--font-color);
   text-decoration: none;
 }
 
-.App-navigation a:hover {
+.nav-content a:visited {
+  color: var(--font-color);
+  text-decoration: none;
+}
+
+.nav-content a:hover {
   color: var(--font-color);
   text-decoration: underline;
 }
+

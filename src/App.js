@@ -41,13 +41,15 @@ function App() {
       <div className="App">
         <Header profile={user}></Header>
         <NavBar></NavBar>
-        <Routes>
-          <Route exact path='/' element={<Home user={user}/>}/>
-          <Route exact path='home' element={<Home user={user}/>}/>
-          <Route exact path='login' element={<Login/>}/>
-          <Route exact path='profile' element={<UserProfileView profile={user} onProfileUpdate={onProfileUpdate}/>}/>
-          <Route exact path='*' element={<div>No Path</div>}/>
-        </Routes>
+        <div className="route-wrapper">
+          <Routes>
+            <Route exact path='/' element={<Home user={user}/>}/>
+            <Route exact path='home' element={<Home user={user}/>}/>
+            <Route exact path='login' element={<Login/>}/>
+            <Route exact path='profile' element={<UserProfileView profile={user} onProfileUpdate={onProfileUpdate}/>}/>
+            <Route exact path='*' element={<div>No Path</div>}/>
+          </Routes>
+        </div>
       </div>
     </Router>
   );
@@ -55,12 +57,14 @@ function App() {
 
 function Header({profile}) {
   return (
-    <header className="App-header">
-      <div>Welcome to Vaesen RPG</div>
-      <Link to="profile">
-        <UserName profile={profile}/>
-      </Link>
-    </header>
+    <div className="header-wrapper">
+      <div className="header-container">
+        <div>Welcome to Vaesen RPG</div>
+        <Link to="profile">
+          <UserName profile={profile}/>
+        </Link>
+      </div>
+    </div>
   )
 }
 Header.propTypes = {
@@ -69,11 +73,13 @@ Header.propTypes = {
 
 function NavBar() {
   return (
-    <div className="App-navigation">
-      <div><Link to="/">Home</Link></div>
-      <div><Link to="characters">Characters</Link></div>
-      <div><Link to="build">Character Builder</Link></div>
-      <div><Link to="profile">Profile</Link></div>
+    <div className="nav-wrapper">
+      <div className="nav-content">
+        <div><Link to="/">Home</Link></div>
+        <div><Link to="characters">Characters</Link></div>
+        <div><Link to="build">Character Builder</Link></div>
+        <div><Link to="profile">Profile</Link></div>
+      </div>
     </div>
   )
 }
