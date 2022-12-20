@@ -1,4 +1,10 @@
 {
+  "responseOverrides": {
+    "401": {
+      "redirect": "/.auth/login/*?post_login_redirect_uri=/",
+      "statusCode": 302
+    }
+  },
   "routes": [
     {
       "route": "/.auth/login/twitter",
@@ -6,8 +12,9 @@
     },
     {
       "route": "/api/*",
-      "allowedRoles": ["authenticated"]
+      "allowedRoles": [
+        "authenticated"
+      ]
     }
   ]
-
 }

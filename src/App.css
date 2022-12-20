@@ -9,7 +9,7 @@
 .header-wrapper > div,
 .nav-wrapper > div,
 .route-wrapper > div {
-  max-width: var(--app-container-width);
+  width: var(--app-container-width);
   margin: var(--app-container-margin);
 }
 
@@ -18,14 +18,7 @@
 }
 
 .header-container {
-  min-height: 10vh;
-  max-width: 1200px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  padding: 10px;
+  min-height: 50px;
 }
 
 .nav-wrapper {

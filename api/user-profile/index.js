@@ -1,30 +1,5 @@
-const mongoose = require('mongoose');
-
-mongoose.connect(
-  process.env.DB_CONNECTION_STRING,
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-  }
-);
-
-const profileSchema = new mongoose.Schema({
-  _id: String,
-  name: String,
-  identityDetails: String,
-  identityProvider: String
-});
-
-const ProfileModel = mongoose.model('profile', profileSchema);
-
-function getPrincipal(req) {
-  const header = req.headers['x-ms-client-principal'];
-  const encoded = Buffer.from(header, 'base64');
-  const decoded = encoded.toString('ascii');
-  const principal = JSON.parse(decoded);
-
-  return principal;
-}
+const ProfileModel = require('../database/profile-model');
+const auth = require('../azure/auth');
 
 module.exports = async function (context, req) {
   context.res = {
@@ -33,7 +8,7 @@ module.exports = async function (context, req) {
     }
   }
 
-  const principal = getPrincipal(req);
+  const principal = auth.getPrincipal(req);
   switch (req.method) {
     case 'GET':
       await getProfile(principal, context);

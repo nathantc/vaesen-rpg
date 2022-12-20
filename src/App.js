@@ -5,6 +5,7 @@ import {PropTypes} from 'prop-types';
 import {Profile} from './api-data';
 import {fetchUserProfile, ApiMessage} from './api-services';
 import {UserProfileView, UserName} from './UserProfileView';
+import {CharacterList} from './CharacterList';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,6 +46,7 @@ function App() {
           <Routes>
             <Route exact path='/' element={<Home user={user}/>}/>
             <Route exact path='home' element={<Home user={user}/>}/>
+            <Route exact path='characters' element={<CharacterList/>}/>
             <Route exact path='login' element={<Login/>}/>
             <Route exact path='profile' element={<UserProfileView profile={user} onProfileUpdate={onProfileUpdate}/>}/>
             <Route exact path='*' element={<div>No Path</div>}/>
@@ -78,7 +80,6 @@ function NavBar() {
         <div><Link to="/">Home</Link></div>
         <div><Link to="characters">Characters</Link></div>
         <div><Link to="build">Character Builder</Link></div>
-        <div><Link to="profile">Profile</Link></div>
       </div>
     </div>
   )
@@ -89,7 +90,7 @@ function Login() {
     <div>
       Choose login method:
       <a onClick={() => {
-        window.location = '/.auth/login/github'
+        window.location = '/.azure/login/github'
       }}>Github</a>
     </div>
   )
@@ -97,8 +98,8 @@ function Login() {
 
 function Home() {
   const logout = () => {
-    // window.history.pushState({}, undefined, '/.auth/logout');
-    window.location = '.auth/logout'
+    // window.history.pushState({}, undefined, '/.azure/logout');
+    window.location = '.azure/logout'
   }
 
   return (
