@@ -25,12 +25,13 @@ export function fetchUserProfile() {
         const data = await response.json();
         console.log(`Profile: ${JSON.stringify(data)}`);
         if (data.profile == null) {
-          reject(new Error('User is not authenticated'))
+          resolve(null);
         } else {
           resolve(new Profile(data.profile.name));
         }
       } catch (e) {
-        reject(new Error('Unable to retrieve user profile.'));
+        console.log(new Error('Unable to retrieve user profile.'));
+        resolve(null);
       }
     })();
   })

@@ -3,54 +3,54 @@ import {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
 import {PropTypes} from 'prop-types';
 import {Profile} from './api-data';
-import {fetchUserProfile, ApiMessage} from './api-services';
-import {UserProfileView, UserName} from './UserProfileView';
+import {ApiMessage} from './api-services';
 import {CharacterList} from './CharacterList';
 import {CharacterNew} from './CharacterNew';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const [user, setUser] = useState(null);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     (async () => {
       if (!isLoading) return;
-      setUser(await fetchUserProfile());
+      const response = await fetch('/.auth/me');
+      const data = await response.json();
+      if (data.clientPrincipal != null) {
+        setProfile(new Profile(data.clientPrincipal.userDetails));
+      }
       setIsLoading(false);
     })();
   }, []);
 
-  const onProfileUpdate = () => {
-    (async () => {
-      try {
-        setUser(await fetchUserProfile());
-      } catch (e) {
-        console.log(e);
-      }
-    })();
+  const logout = () => {
+    window.location = '/.azure/logout?post_logout_redirect_uri=' + window.location.pathname;
   }
 
+  console.log('isLoading: ', isLoading);
+  console.log('profile', profile);
   if (isLoading) {
     return <div>Loading....</div>
   }
 
-  if (user == null) {
-    window.history.pushState({}, undefined, '/login');
+  if (profile == null) {
+    console.log('login redirect=', window.location);
+    return <Login></Login>;
   }
 
   return (
     <Router>
       <div className="App">
-        <Header profile={user}></Header>
+        <Header></Header>
         <NavBar></NavBar>
+        <div><a onClick={logout}>Logout</a></div>
         <div className="route-wrapper">
           <Routes>
-            <Route exact path='/' element={<Home user={user}/>}/>
-            <Route exact path='home' element={<Home user={user}/>}/>
+            <Route exact path='/' element={<Home user={profile}/>}/>
+            <Route exact path='home' element={<Home user={profile}/>}/>
             <Route exact path='characters' element={<CharacterList/>}/>
             <Route exact path='characters/new' element={<CharacterNew/>}/>
             <Route exact path='login' element={<Login/>}/>
-            <Route exact path='profile' element={<UserProfileView profile={user} onProfileUpdate={onProfileUpdate}/>}/>
             <Route exact path='*' element={<div>No Path</div>}/>
           </Routes>
         </div>
@@ -59,14 +59,12 @@ function App() {
   );
 }
 
-function Header({profile}) {
+function Header() {
   return (
     <div className="header-wrapper">
       <div className="header-container">
         <div>Welcome to Vaesen RPG</div>
-        <Link to="profile">
-          <UserName profile={profile}/>
-        </Link>
+        <div>profile name</div>
       </div>
     </div>
   )
@@ -92,21 +90,15 @@ function Login() {
     <div>
       Choose login method:
       <a onClick={() => {
-        window.location = '/.azure/login/github'
+        window.location = '/.azure/login/github?post_login_redirect_uri=' + window.location.pathname;
       }}>Github</a>
     </div>
   )
 }
 
 function Home() {
-  const logout = () => {
-    // window.history.pushState({}, undefined, '/.azure/logout');
-    window.location = '.azure/logout'
-  }
-
   return (
     <>
-      <div><a onClick={logout}>Logout</a></div>
       <ApiMessage></ApiMessage>
     </>
   )

@@ -1,15 +1,22 @@
 import './UserProfileView.css';
 import {PropTypes} from 'prop-types';
 import {Profile} from './api-data';
-import {submitProfileChanges} from './api-services';
-import {useState} from 'react';
+import {fetchUserProfile, submitProfileChanges} from './api-services';
+import {useEffect, useState} from 'react';
 import {Button} from 'antd';
 
-export function UserProfileView({profile, onProfileUpdate}) {
+export function UserProfileView() {
+  const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [data, setData] = useState({
-    name: profile.name
-  });
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const profile = await fetchUserProfile();
+      setData(profile);
+      setIsLoading(false);
+    })();
+  })
 
   const handleChange = ({target}) => {
     const {name, value} = target;
@@ -23,7 +30,6 @@ export function UserProfileView({profile, onProfileUpdate}) {
     (async () => {
       try {
         await submitProfileChanges(data);
-        onProfileUpdate();
       } catch (e) {
         console.log(e);
       } finally {
@@ -34,7 +40,11 @@ export function UserProfileView({profile, onProfileUpdate}) {
   };
 
   const handleReset = () => {
-    setData({ name: profile.name });
+    // setData({ name: profile.name });
+  }
+
+  if (isLoading) {
+    return (<div>Loading....</div>)
   }
 
   return (
