@@ -1,4 +1,13 @@
 import {useEffect, useState} from 'react';
+import {Link} from 'react-router-dom';
+
+const apiUserCharacters = 'api/user-characters';
+
+async function getUserCharacters() {
+  const response = await fetch(apiUserCharacters);
+  const data = await response.json();
+  return data.characters;
+}
 
 export function CharacterList() {
   const [refreshList, setRefreshList] = useState(true);
@@ -7,14 +16,11 @@ export function CharacterList() {
   useEffect(() => {
     if (refreshList === false) return;
     (async () => {
-      const response = await fetch('api/user-characters');
-      const data = await response.json();
-      setCharacters(data.characters);
+      setCharacters(await getUserCharacters());
       setRefreshList(false);
     })();
   })
 
-  console.log('Characters: ', characters);
   const list = characters.map((character) => {
     return <li key={character._id}>{character.name}</li>
   });
@@ -22,6 +28,7 @@ export function CharacterList() {
   return (
     <div>
       <h1>Characters</h1>
+      <div><Link to="/characters/new">New Character</Link></div>
       <ul>{list}</ul>
     </div>
   )

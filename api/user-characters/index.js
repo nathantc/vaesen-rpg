@@ -32,9 +32,14 @@ async function getCharacters(ownerId, context) {
 async function updateCharacter(ownerId, context) {
   const _id = context.req.body.id;
   const data = context.req.body.data;
+  data.ownerId = ownerId;
   const options = {upsert: true};
 
-  const result = await CharacterModel.updateOne({_id: _id, ownerId: ownerId}, data, options);
+  if (_id === null || _id === undefined) {
+    await CharacterModel.insertMany({}, data);
+  } else {
+    await CharacterModel.updateOne({_id: _id, ownerId: ownerId}, data, options);
+  }
 
 }
 

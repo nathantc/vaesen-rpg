@@ -6,6 +6,7 @@ import {Profile} from './api-data';
 import {fetchUserProfile, ApiMessage} from './api-services';
 import {UserProfileView, UserName} from './UserProfileView';
 import {CharacterList} from './CharacterList';
+import {CharacterNew} from './CharacterNew';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -14,7 +15,7 @@ function App() {
   useEffect(() => {
     (async () => {
       if (!isLoading) return;
-      await onProfileUpdate();
+      setUser(await fetchUserProfile());
       setIsLoading(false);
     })();
   }, []);
@@ -47,6 +48,7 @@ function App() {
             <Route exact path='/' element={<Home user={user}/>}/>
             <Route exact path='home' element={<Home user={user}/>}/>
             <Route exact path='characters' element={<CharacterList/>}/>
+            <Route exact path='characters/new' element={<CharacterNew/>}/>
             <Route exact path='login' element={<Login/>}/>
             <Route exact path='profile' element={<UserProfileView profile={user} onProfileUpdate={onProfileUpdate}/>}/>
             <Route exact path='*' element={<div>No Path</div>}/>
