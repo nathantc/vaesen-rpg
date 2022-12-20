@@ -22,7 +22,11 @@ export function CharacterList() {
   })
 
   const list = characters.map((character) => {
-    return <li key={character._id}>{character.name}</li>
+    return (
+      <li key={character._id}>
+        <Link to={'/characters/' + character._id}>{character.name}</Link>
+      </li>
+    )
   });
 
   return (

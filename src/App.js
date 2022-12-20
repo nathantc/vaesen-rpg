@@ -5,7 +5,7 @@ import {PropTypes} from 'prop-types';
 import {Profile} from './api-data';
 import {ApiMessage} from './api-services';
 import {CharacterList} from './CharacterList';
-import {CharacterNew} from './CharacterNew';
+import {CharacterNew, CharacterEdit} from './CharacterNew';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -23,10 +23,6 @@ function App() {
     })();
   }, []);
 
-  const logout = () => {
-    window.location = '/.auth/logout?post_logout_redirect_uri=' + window.location.pathname;
-  }
-
   console.log('isLoading: ', isLoading);
   console.log('profile', profile);
   if (isLoading) {
@@ -43,13 +39,13 @@ function App() {
       <div className="App">
         <Header></Header>
         <NavBar></NavBar>
-        <div><a onClick={logout}>Logout</a></div>
         <div className="route-wrapper">
           <Routes>
             <Route exact path='/' element={<Home user={profile}/>}/>
             <Route exact path='home' element={<Home user={profile}/>}/>
             <Route exact path='characters' element={<CharacterList/>}/>
             <Route exact path='characters/new' element={<CharacterNew/>}/>
+            <Route exact path='characters/:characterId' element={<CharacterEdit/>}/>
             <Route exact path='login' element={<Login/>}/>
             <Route exact path='*' element={<div>No Path</div>}/>
           </Routes>
@@ -65,6 +61,7 @@ function Header() {
       <div className="header-container">
         <div>Welcome to Vaesen RPG</div>
         <div>profile name</div>
+        <div><a href={'/.auth/logout?post_logout_redirect_uri=' + window.location.pathname}>Logout</a></div>
       </div>
     </div>
   )
@@ -89,9 +86,7 @@ function Login() {
   return (
     <div>
       Choose login method:
-      <a onClick={() => {
-        window.location = '/.auth/login/github?post_login_redirect_uri=' + window.location.pathname;
-      }}>Github</a>
+      <a href={'/.auth/login/github?post_login_redirect_uri=' + window.location.pathname}>Github</a>
     </div>
   )
 }
@@ -99,6 +94,7 @@ function Login() {
 function Home() {
   return (
     <>
+      <div>Home Page</div>
       <ApiMessage></ApiMessage>
     </>
   )
