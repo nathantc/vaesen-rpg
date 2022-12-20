@@ -24,7 +24,7 @@ function App() {
   }, []);
 
   const logout = () => {
-    window.location = '/.azure/logout?post_logout_redirect_uri=' + window.location.pathname;
+    window.location = '/.auth/logout?post_logout_redirect_uri=' + window.location.pathname;
   }
 
   console.log('isLoading: ', isLoading);
@@ -90,7 +90,7 @@ function Login() {
     <div>
       Choose login method:
       <a onClick={() => {
-        window.location = '/.azure/login/github?post_login_redirect_uri=' + window.location.pathname;
+        window.location = '/.auth/login/github?post_login_redirect_uri=' + window.location.pathname;
       }}>Github</a>
     </div>
   )
