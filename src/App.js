@@ -6,6 +6,7 @@ import {Profile} from './api-data';
 import {ApiMessage} from './api-services';
 import {CharacterList} from './CharacterList';
 import {CharacterNew, CharacterEdit} from './CharacterNew';
+import {GameList, GameNew, GameView} from './Game';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -46,6 +47,9 @@ function App() {
             <Route exact path='characters' element={<CharacterList/>}/>
             <Route exact path='characters/new' element={<CharacterNew/>}/>
             <Route exact path='characters/:characterId' element={<CharacterEdit/>}/>
+            <Route exact path='games' element={<GameList/>}/>
+            <Route exact path='games\new' element={<GameNew/>}/>
+            <Route exact path='games\:gameId' element={<GameView/>}/>
             <Route exact path='login' element={<Login/>}/>
             <Route exact path='*' element={<div>No Path</div>}/>
           </Routes>

@@ -1,5 +1,6 @@
-const CharacterModel = require('../database/character-model');
+const GameModel = require('../database/game-model');
 const auth = require('../azure/auth')
+const CharacterModel = require('../database/character-model');
 
 module.exports = async function (context, req) {
   context.res = {
@@ -11,34 +12,44 @@ module.exports = async function (context, req) {
   const principal = auth.getPrincipal(req);
   switch (req.method) {
     case 'GET':
-      await getCharacters(principal.userId, context);
+      await getGames(principal.userId, context);
       break;
     case 'POST':
-      await updateCharacter(principal.userId, context);
+      await updateGame(principal.userId, context);
       break;
     default:
       context.res.status = 405;
   }
 };
 
-async function getCharacters(ownerId, context) {
-  const characters = await CharacterModel.find({ownerId: ownerId});
+async function getGames(ownerId, context) {
+  const games = await GameModel.find({ownerId: ownerId});
 
   context.res.body = {
-    characters: characters
+    games: games
   };
 }
 
-async function updateCharacter(ownerId, context) {
+function isNewGame(_id) {
+  return _id === null || _id === undefined;
+}
+
+async function updateGame(ownerId, context) {
   const _id = context.req.body.id;
   const data = context.req.body.data;
   data.ownerId = ownerId;
 
   if (_id === null || _id === undefined) {
-    const result = await (new CharacterModel(data)).save();
+    const result = await (new GameModel(data)).save();
   } else {
     console.log('updateOne:', _id, ownerId, data);
+
+    savedGamed = await GameModel.findOne({_id: id, ownerId: ownerId});
+
+    savedGamed.save()
+
     await CharacterModel.updateOne({_id: _id, ownerId: ownerId}, data);
   }
 
 }
+
