@@ -21,24 +21,30 @@ module.exports = async function (context, req) {
   }
 };
 
-async function getCharacters(ownerId, context) {
-  const characters = await CharacterModel.find({ownerId: ownerId});
+async function getCharacters(userId, context) {
+  const characters = await CharacterModel.find({ownerId: userId});
 
   context.res.body = {
     characters: characters
   };
 }
 
-async function updateCharacter(ownerId, context) {
+async function updateCharacter(userId, context) {
   const _id = context.req.body.id;
   const data = context.req.body.data;
-  data.ownerId = ownerId;
+  data.ownerId = userId;
 
   if (_id === null || _id === undefined) {
     const result = await (new CharacterModel(data)).save();
+    context.res.body = {
+      _id: result.id
+    };
   } else {
-    console.log('updateOne:', _id, ownerId, data);
-    await CharacterModel.updateOne({_id: _id, ownerId: ownerId}, data);
+    console.log('updateOne:', _id, userId, data);
+    await CharacterModel.updateOne({_id: _id, ownerId: userId}, data);
+    context.res.body = {
+      _id: id
+    };
   }
 
 }
