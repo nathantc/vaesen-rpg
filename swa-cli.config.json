@@ -2,7 +2,9 @@
   "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
   "configurations": {
     "vaesen-rpg": {
+      "port": "4280",
       "host": "127.0.0.1",
+      "appDevserverUrl": "http://127.0.0.1:3000",
       "appLocation": ".",
       "apiLocation": "api",
       "outputLocation": "build"
