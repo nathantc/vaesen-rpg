@@ -22,20 +22,19 @@ export function CharacterBuilder() {
     return <div>Loading...</div>
   }
 
-  var step = characterBuild.step ?? 1;
-  switch (step) {
-    case 1:
-      step = <CharacterClass />;
-      break;
-    default:
-      step = <CharacterUpbringing />
-      break;
+  function renderBuildStep() {
+    switch (characterBuild.step ?? 1) {
+      case 1:
+        return <CharacterClass />;
+      default:
+        return <CharacterUpbringing />
+    }
   }
 
   return (
     <div>
       <h1>Character Builder {characterId}</h1>
-      {step}
+      {renderBuildStep()}
     </div>
   )
 }
