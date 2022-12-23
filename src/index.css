@@ -75,10 +75,6 @@ code {
   monospace;
 }
 
-div {
-  padding: 3px;
-}
-
 a:active {
   text-decoration: underline;
 }

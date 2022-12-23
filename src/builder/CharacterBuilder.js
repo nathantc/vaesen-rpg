@@ -1,3 +1,4 @@
+import './CharacterBuilder.css';
 import {useParams} from 'react-router-dom';
 import {useEffect, useState} from 'react';
 import {CharacterClass} from './CharacterClass';
@@ -33,7 +34,7 @@ export function CharacterBuilder() {
 
   return (
     <div>
-      <h1>Builder {characterId}</h1>
+      <h1>Character Builder {characterId}</h1>
       {step}
     </div>
   )

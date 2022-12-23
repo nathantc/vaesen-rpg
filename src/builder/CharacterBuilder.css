@@ -1,0 +1,6 @@
+
+.table-economic-class {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    max-width: 300px;
+}
