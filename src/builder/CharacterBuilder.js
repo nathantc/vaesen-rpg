@@ -7,7 +7,7 @@ import {fetchCharacterBuild} from './character-builder';
 
 export function CharacterBuilder() {
   const { characterId } = useParams();
-  const [isLoading, setIsLoading] = useState();
+  const [isLoading, setIsLoading] = useState(true);
   const [characterBuild, setCharacterBuild] = useState({});
 
   useEffect(() => {

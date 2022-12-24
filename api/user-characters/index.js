@@ -2,6 +2,7 @@ const CharacterModel = require('../database/character-model');
 const auth = require('../azure/auth')
 
 module.exports = async function (context, req) {
+  console.log(context)
   context.res = {
     header: {
       'Content-Type': 'application/json'
@@ -22,7 +23,11 @@ module.exports = async function (context, req) {
 };
 
 async function getCharacters(userId, context) {
-  const characters = await CharacterModel.find({ownerId: userId});
+  const filter = {ownerId: userId};
+  if (context.req.query.id) {
+    filter._id = context.req.query.id;
+  }
+  const characters = await CharacterModel.find(filter);
 
   context.res.body = {
     characters: characters

@@ -1,6 +1,6 @@
 export async function fetchCharacterBuild(characterId) {
   try {
-    const response = await fetch(buildApi, newGetRequest({_id: characterId}));
+    const response = await fetch(buildApi + '?id=' + characterId, getHeader());
     const payload = await response.json();
     return payload.character;
   } catch (e) {
@@ -9,12 +9,11 @@ export async function fetchCharacterBuild(characterId) {
   }
 }
 
-const buildApi = '/api/character-build';
+const buildApi = '/api/user-characters';
 
-function newGetRequest(body) {
+function getHeader() {
   return {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
   };
 }

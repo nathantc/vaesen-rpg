@@ -14,6 +14,33 @@
 
 ### Learnings
 
+#### Update 12/23/2022
+
+Setting the SWA CLI config file (`swa-cli.config.jason`) to use `127.0.0.1` over `localhost` seems to stabilize the local emulator. The `host` setting is where the emulator starts, and `appDevserverUrl` is where it looks for the React app. Run the local setup using:
+1. `npm start`
+2. `swa start`
+3. Open browser to `127.0.0.1:4280`
+
+Config settings:
+
+```
+{
+  "$schema": "https://aka.ms/azure/static-web-apps-cli/schema",
+  "configurations": {
+    "vaesen-rpg": {
+      "port": "4280",
+      "host": "127.0.0.1",
+      "appDevserverUrl": "http://127.0.0.1:3000",
+      "appLocation": ".",
+      "apiLocation": "api",
+      "outputLocation": "build"
+    }
+  }
+}
+```
+
+#### Prior
+
 Local development for Azure Static Web Apps is explained [here](https://learn.microsoft.com/en-us/azure/static-web-apps/local-development).
 
 The Static Web App CLI provides a script to run the Azure Static Web Emulators outside of VSCode. To run localling, 

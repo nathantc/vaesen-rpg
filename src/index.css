@@ -46,16 +46,28 @@ table {
 /****************************** APP GLOBAL CSS ******************************/
 
 
+/*:root {*/
+/*  --app-container-width: 1200px;*/
+/*  --app-container-margin: 0 auto;*/
+/*  --font-color: black;*/
+/*  --background-page-color: #F7F6F4;*/
+/*  --background-offset-color: #E5DDD6;*/
+/*  --background-header-color: #B09D8D;*/
+/*  --section-border: solid #4B391C 1px;*/
+/*  --section-background-color: #F4F3EF;*/
+/*  --section-background-offset-color: #F3F2EF;*/
+/*}*/
+
 :root {
   --app-container-width: 1200px;
   --app-container-margin: 0 auto;
-  --font-color: black;
-  --background-page-color: #F7F6F4;
-  --background-offset-color: #E5DDD6;
-  --background-header-color: #B09D8D;
+  --font-color: #ffffff;
+  --background-page-color: #181818;
+  --background-offset-color: #383430;
+  --background-header-color: #49423b;
   --section-border: solid #4B391C 1px;
-  --section-background-color: #F4F3EF;
-  --section-background-offset-color: #F3F2EF;
+  --section-background-color: #484641;
+  --section-background-offset-color: #54461c;
 }
 
 
