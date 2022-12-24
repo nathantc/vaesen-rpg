@@ -1,5 +1,5 @@
 const ProfileModel = require('../database/profile-model');
-const auth = require('../azure/auth');
+const auth = require('../azure/api-support');
 
 module.exports = async function (context, req) {
   context.res = {

@@ -1,24 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-
-const apiUserCharacters = 'api/user-characters';
-
-async function getUserCharacters() {
-  const response = await fetch(apiUserCharacters);
-  const data = await response.json();
-  return data.characters;
-}
-
-async function createNewCharacter() {
-  const requestOptions = {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({data: { name: 'New Character' }})
-  };
-  const response = await fetch(apiUserCharacters, requestOptions);
-  const data = await response.json();
-  return data._id;
-}
+import {fetchCharacterBuilds, newCharacterBuild} from './character-builder';
 
 export function CharacterList() {
   const [refreshList, setRefreshList] = useState(true);
@@ -29,7 +11,9 @@ export function CharacterList() {
   useEffect(() => {
     if (refreshList === false) return;
     (async () => {
-      setCharacters(await getUserCharacters());
+      const data = await fetchCharacterBuilds();
+      console.log('data response', data);
+      setCharacters(data);
       setRefreshList(false);
       navigate()
     })();
@@ -38,8 +22,8 @@ export function CharacterList() {
   async function newCharacter() {
     setDisabled(true);
     try {
-      const id = await createNewCharacter();
-      navigate(`/builder/${id}`);
+      const id = await newCharacterBuild();
+      navigate(`/character-build/${id}`);
     } catch (e) {
       console.log(e);
       alert('Unexpected error occurred create a character.')
@@ -49,7 +33,7 @@ export function CharacterList() {
   const list = characters.map((character) => {
     return (
       <li key={character._id}>
-        <Link to={'/characters/' + character._id}>{character.name}</Link>
+        <Link to={'/character-build/' + character._id}>{character.name}</Link>
       </li>
     )
   });

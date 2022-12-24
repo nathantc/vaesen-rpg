@@ -7,4 +7,12 @@ function getPrincipal(req) {
   return principal;
 }
 
-module.exports = { getPrincipal };
+function newContextResponse() {
+  return {
+    header: {
+      'Content-Type': 'application/json'
+    }
+  }
+}
+
+module.exports = {getPrincipal, newContextResponse};

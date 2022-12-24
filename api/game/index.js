@@ -1,5 +1,5 @@
 const GameModel = require('../database/game-model');
-const auth = require('../azure/auth')
+const auth = require('../azure/api-support')
 const CharacterModel = require('../database/character-model');
 
 module.exports = async function (context, req) {

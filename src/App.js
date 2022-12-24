@@ -4,9 +4,7 @@ import {BrowserRouter as Router, Route, Routes, Link} from 'react-router-dom';
 import {PropTypes} from 'prop-types';
 import {Profile} from './api-data';
 import {ApiMessage} from './api-services';
-import {CharacterList} from './CharacterList';
-import {CharacterNew, CharacterEdit} from './CharacterNew';
-import {GameList, GameNew, GameView} from './Game';
+import {CharacterList} from './builder/CharacterList';
 import {CharacterBuilder} from './builder/CharacterBuilder';
 
 function App() {
@@ -46,12 +44,7 @@ function App() {
             <Route exact path='/' element={<Home user={profile}/>}/>
             <Route exact path='home' element={<Home user={profile}/>}/>
             <Route exact path='characters' element={<CharacterList/>}/>
-            <Route exact path='characters/new' element={<CharacterNew/>}/>
-            <Route exact path='characters/:characterId' element={<CharacterEdit/>}/>
-            <Route exact path='build/:characterId' element={<CharacterBuilder/>}/>
-            <Route exact path='games' element={<GameList/>}/>
-            <Route exact path='games\new' element={<GameNew/>}/>
-            <Route exact path='games\:gameId' element={<GameView/>}/>
+            <Route exact path='character-build/:characterId' element={<CharacterBuilder/>}/>
             <Route exact path='login' element={<Login/>}/>
             <Route exact path='*' element={<div>No Path</div>}/>
           </Routes>
@@ -82,7 +75,6 @@ function NavBar() {
       <div className="nav-content">
         <div><Link to="/">Home</Link></div>
         <div><Link to="characters">Characters</Link></div>
-        <div><Link to="build">Character Builder</Link></div>
       </div>
     </div>
   )

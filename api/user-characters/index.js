@@ -1,5 +1,5 @@
 const CharacterModel = require('../database/character-model');
-const auth = require('../azure/auth')
+const auth = require('../azure/api-support')
 
 module.exports = async function (context, req) {
   console.log(context)
